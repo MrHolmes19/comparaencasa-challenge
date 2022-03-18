@@ -1,7 +1,6 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .serializers import *
-from .utils import *
 
 # Create your views here.
 

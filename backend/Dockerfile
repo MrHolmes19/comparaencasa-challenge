@@ -1,9 +1,22 @@
-FROM python:3.8-slim-buster
+#FROM python:3.9-slim-buster
+FROM python:3.9
+#FROM python:3.9-alpine
 
-WORKDIR /App
+# Para leer mensajes de la consola de python
+ENV PYTHONUNBUFFERED 1
 
-COPY requirements.txt requirements.txt
+RUN mkdir /app/
+RUN mkdir /app/backend
 
-RUN pip3 install -r requirements.txt
+WORKDIR /app/backend
 
-CMD [ "python3", "manage.py", "runserver", "0.0.0.0:8000" ]
+COPY requirements.txt /app/backend/
+
+RUN apt-get update
+RUN apt-get install python3-dev default-libmysqlclient-dev gcc  -y
+
+RUN python -m pip install -r requirements.txt
+
+COPY . /app/backend/
+
+#EXPOSE 8000

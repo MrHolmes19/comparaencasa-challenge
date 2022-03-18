@@ -1,0 +1,60 @@
+version: "3"
+   
+services:
+
+  # MySQL Database
+  db:
+    image: mysql
+    #image: mysql:8.0.28
+    container_name: mysql
+    #command:
+    restart: always
+    # volumes:
+    #   - ./data/db:/var/lib/mysql/data
+    ports:
+      - '3306:3306'
+    environment:
+      #- MYSQL_HOST=localhost
+      - MYSQL_DATABASE=cars
+      #- MYSQL_USER=user
+      #- MYSQL_USER=user
+      #- MYSQL_PASSWORD=123
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=123
+      # - MYSQL_ALLOW_EMPTY_PASSWORD=1
+
+  # backend API with Django
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    #command: python manage.py runserver 0.0.0.0:8000
+    command: >
+        sh -c "sleep 20 &&
+              python manage.py migrate &&
+              python manage.py populateDB &&
+              python manage.py runserver 0.0.0.0:8000
+              "
+    # volumes:
+    #   - .:/app/backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  # frontend app with React js
+  frontend:
+    command : npm start
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    # volumes:
+    #   - .:/app/frontend
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    depends_on:
+      - backend
+      - db   
+
+
