@@ -1,6 +1,4 @@
-#FROM python:3.9-slim-buster
-FROM python:3.9
-#FROM python:3.9-alpine
+FROM python:3.9-slim-buster
 
 # Para leer mensajes de la consola de python
 ENV PYTHONUNBUFFERED 1
@@ -12,6 +10,7 @@ WORKDIR /app/backend
 
 COPY requirements.txt /app/backend/
 
+# Required commands to install mysql
 RUN apt-get update
 RUN apt-get install python3-dev default-libmysqlclient-dev gcc  -y
 

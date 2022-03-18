@@ -46,15 +46,20 @@ const CarSearch = () => {
   };
 
   return (
-    <div>
-      <h3>Enter a car plate:</h3>
-      <CarForm handleSearch={handleSearch}/>
-      {loading && <Loader/> }
-      <hr></hr>
-      <h3>Result:</h3>
-      {search && !loading && (
-        <Response response={response}/>
-      )}
+    <div className="row">
+      <div className="col col-md-8 offset-md-2 col-lg-8 offset-lg-2">
+        <p className="mb-4 fs-5">Enter a car plate:</p>
+        <CarForm handleSearch={handleSearch}/>
+        {loading && <Loader/> }
+
+        <hr></hr>
+
+        <p className="mb-4 fs-5">Result:</p>  
+              
+        {search && !loading && (
+          <Response response={response}/>
+        )}        
+      </div>
     </div>
   )
 }
