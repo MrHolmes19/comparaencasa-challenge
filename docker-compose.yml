@@ -14,14 +14,11 @@ services:
     image: mysql
     container_name: mysql
     restart: always
-    # volumes:
-    #   - ./data/db:/var/lib/mysql/data
     ports:
       - '3306:3306'
     environment:
       # - MYSQL_HOST=localhost
       - MYSQL_DATABASE=cars
-      # - MYSQL_USER=user
       # - MYSQL_USER=user
       # - MYSQL_PASSWORD=123
       - MYSQL_ROOT_USER=root
@@ -34,7 +31,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     command: >
-        sh -c "sleep 20 &&
+        sh -c "sleep 10 &&
               python manage.py migrate &&
               python manage.py populateDB &&
               python manage.py runserver 0.0.0.0:8000

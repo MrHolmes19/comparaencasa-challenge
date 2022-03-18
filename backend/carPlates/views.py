@@ -14,7 +14,7 @@ class CarsViewSet(viewsets.ModelViewSet):
         car_plate = request.query_params.get('carplate')
         car_plate = "".join(car_plate.split()).upper()
 
-        if car_plate:
+        if car_plate: # Works as a retrieve action
             if cache.get(car_plate):
                 car_name = cache.get(car_plate)
                 print("Data is coming from caché: ", car_name)
@@ -27,7 +27,8 @@ class CarsViewSet(viewsets.ModelViewSet):
                 serializer = self.serializer_class(car_name)
                 return Response(serializer.data)
             return Response({'Error': 'This car plate is not registered here'}, status=status.HTTP_400_BAD_REQUEST)
-        else:
+        
+        else: # Works as a list action
             cars = Cars.objects.all()
             serializer = self.serializer_class(cars, many = True)
             return Response(serializer.data)
