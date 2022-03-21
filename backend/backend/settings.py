@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -91,7 +92,8 @@ DATABASES = {
         'NAME': 'cars',
         'USER':'root',
         'PASSWORD': '123',
-        'HOST': 'localhost', # "db" for Docker
+        'HOST': os.getenv('MYSQL_HOST','localhost'),
+        #'HOST': 'localhost', # "db" for Docker
         'PORT': 3306,
         'OPTIONS': {
             'auth_plugin': 'mysql_native_password'
@@ -102,8 +104,9 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        #"LOCATION": "redis://127.0.0.1:6379/1", # for local
         #"LOCATION": "redis://redis:6379/0",   # for Docker
+        'LOCATION': f"redis://{os.getenv('redis_HOST','127.0.0.1')}:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }

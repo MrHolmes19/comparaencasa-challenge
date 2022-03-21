@@ -10,7 +10,6 @@ This repo contains:
 ## Back-end App
 
 I built the application with Django using the Django REST Framework library. I generated a "Cars" model with the requested 3 columns and a view with ModelViewSet for the CRUD. In the same view I overrode the list method and introduced the corresponding logic (caching and retrieving).
-I didn't worry about security (using environment variables) as it's a small sample project
 
 http://127.0.0.1:8000/cars/carplates/
 
@@ -45,4 +44,7 @@ PORT: 6379
 ## Docker-compose
 
 The file docker-compose.yml contains the link of the 4 images. Both back-end app and front-end back have their own dockerfile. It was pushed to my repo:  
+
 https://hub.docker.com/repository/docker/mrholmes19/comparaencasa-challenge
+
+For avoiding race condition I used a script "check_db.py". I could have done it through a "SLEEP 20 command" but it wasn't that cool
