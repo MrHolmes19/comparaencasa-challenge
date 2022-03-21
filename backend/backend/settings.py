@@ -86,12 +86,16 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        #'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mysql.connector.django',
         'NAME': 'cars',
         'USER':'root',
         'PASSWORD': '123',
-        'HOST': 'localhost', #'db'
-        'PORT': 3306
+        'HOST': 'localhost', # "db" for Docker
+        'PORT': 3306,
+        'OPTIONS': {
+            'auth_plugin': 'mysql_native_password'
+        }
     }
 }
 
@@ -99,6 +103,7 @@ CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
+        #"LOCATION": "redis://redis:6379/0",   # for Docker
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
